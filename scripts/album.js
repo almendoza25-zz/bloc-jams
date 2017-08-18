@@ -84,6 +84,11 @@ var setCurrentAlbum = function(album) {
 var findParentByClassName = function(element, targetClass) {
     if (element) {
         var currentParent = element.parentElement;
+        if (currentParent === null) {
+            console.log('No parent found');
+        } else if (currentParent.className !== targetClass) {
+            console.log('No parent found with that class name');
+        }
         while (currentParent.className !== targetClass && currentParent.className !== null) {
             currentParent = currentParent.parentElement;
         }
@@ -143,7 +148,7 @@ window.onload = function() {
 
          // Only target individual song rows during event delegation
          if (event.target.parentElement.className === 'album-view-song-item') {
-      
+
               var songItem = getSongItem(event.target);
 
               if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
