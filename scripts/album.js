@@ -55,29 +55,30 @@ var createSongRow = function(songNumber, songName, songLength) {
       + '</tr>'
       ;
 
-      return template;
+      return $(template);
 };
 
 // Select elements that we want to populate with text dynamically
-var albumTitle = document.getElementsByClassName('album-view-title')[0];
-var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-var albumImage = document.getElementsByClassName('album-cover-art')[0];
-var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+var $albumTitle = $('.album-view-title');
+var $albumArtist = $('.album-view-artist');
+var $albumReleaseInfo = $('.album-view-release-info');
+var $albumImage = $('.album-cover-art');
+var $albumSongList = $('.album-view-song-list');
 
 var setCurrentAlbum = function(album) {
      // Assign values to each part of the album
-     albumTitle.firstChild.nodeValue = album.title;
-     albumArtist.firstChild.nodeValue = album.artist;
-     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
-     albumImage.setAttribute('src', album.albumArtUrl);
+     $albumTitle.text(album.title);
+     $albumArtist.text(album.artist);
+     $albumReleaseInfo.text(album.year + ' ' + album.label);
+     $albumImage.attr('src', album.albumArtUrl);
 
      // Initially clears contents of album song list container
-     albumSongList.innerHTML = '';
+     $albumSongList.empty();
 
      // Build list of songs from JavaScript Object
      for (var i = 0; i < album.songs.length; i++) {
-         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+         var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+         $albumSongList.append($newRow);
      }
 };
 
@@ -94,7 +95,7 @@ var findParentByClassName = function(element, targetClass) {
         if (currentParent.className !== targetClass) {
             console.log('No parent found with that class name');
         }
-        
+
         return currentParent;
     }
 };
